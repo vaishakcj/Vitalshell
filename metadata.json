@@ -1,0 +1,6 @@
+{
+  "name": "VitalShell",
+  "description": "Companion application for the VitalShell Smart Jacket with real-time physiological, biomechanical, environmental monitoring and risk-fusion intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
