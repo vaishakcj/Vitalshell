@@ -35,7 +35,6 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
     e.preventDefault();
     setErrorMessage(null);
     setSuccessMessage(null);
-    setIsEmailUnconfirmed(false);
     setResendStatus(null);
 
     if (!email || !email.includes('@')) {
@@ -55,22 +54,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
         if (res.success) {
           onSuccess();
         } else {
-          if (res.emailNotConfirmed) {
-            setIsEmailUnconfirmed(true);
-          }
           setErrorMessage(res.error || 'Failed to sign in. Please check your credentials.');
         }
       } else {
         // Account creation mode ("New operator")
         const res = await signUpWithEmail(email, password);
         if (res.success) {
-          // Switch to OTP code entry mode
-          setMode('otp');
-          setOtp('');
-          setPassword(''); // clear password until confirmed
-          setSuccessMessage(
-            `Account registered! Please enter the 6-digit confirmation code sent to ${email}.`
-          );
+          setMode('signin');
+          setPassword('');
+          setSuccessMessage('Account created successfully. Enter your password to sign in.');
           setErrorMessage(null);
         } else {
           setErrorMessage(res.error || 'Failed to register account.');
@@ -385,7 +377,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onSuccess }) => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="operator@vitalshell.io"
+                    placeholder="Enter your email"
                     className="w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-[#080e1b] border border-slate-200 dark:border-[#1c2c4b] rounded-xl text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500 transition"
                   />
                 </div>

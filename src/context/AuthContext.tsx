@@ -210,9 +210,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: false, error: error.message };
       }
 
-      const needsConfirmation = Boolean(data.user && !data.session);
+      const needsConfirmation = false;
 
-      // Explicitly sign out any auto-created session so the user must sign in manually
+      // Return to the sign-in form after account creation.
       if (data.session) {
         await client.auth.signOut();
       }
@@ -225,9 +225,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return {
         success: true,
         needsConfirmation,
-        message: needsConfirmation
-          ? 'Account created! Please enter the 6-digit verification code sent to your email.'
-          : 'Account created successfully! Please enter your password to sign in.',
+        message: 'Account created successfully! Please enter your password to sign in.',
       };
     }
 
